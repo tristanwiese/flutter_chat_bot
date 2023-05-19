@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:chat_bot/Utils/theme.dart';
 import 'package:chat_bot/Utils/utils.dart';
+import 'package:chat_bot/check_network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -46,9 +47,10 @@ class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        darkTheme: isDarkMode ? darkMode : ligthMode,
-        home: Prompt(updateTheme: updateTheme));
+      debugShowCheckedModeBanner: false,
+      darkTheme: isDarkMode ? darkMode : ligthMode,
+      home: CheckNetwork(updateTheme: updateTheme),
+    );
   }
 
   updateTheme() => setState(() {
@@ -90,19 +92,17 @@ class _ProviderState extends State<Provider> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 100,
-                child: strings.isNotEmpty?
-                ListView.builder(
-                  itemCount: strings.length,
-                  itemBuilder: (context, i) {
-                    return Center(child: Text(strings[i]));
-                  },
-                )
-                :
-                const Center(
-                  child: Text("No Data..."),
-                )
-              ),
+                  height: 100,
+                  child: strings.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: strings.length,
+                          itemBuilder: (context, i) {
+                            return Center(child: Text(strings[i]));
+                          },
+                        )
+                      : const Center(
+                          child: Text("No Data..."),
+                        )),
               const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -115,8 +115,8 @@ class _ProviderState extends State<Provider> {
                   ),
                   IconButton(
                     onPressed: () {
-                      if (strings.length != 0){
-                      removeString();
+                      if (strings.length != 0) {
+                        removeString();
                       }
                     },
                     icon: const Icon(Icons.remove),
@@ -135,18 +135,14 @@ class _ProviderState extends State<Provider> {
       child: (currentTheme == "dark")
           ? const Icon(Icons.light_mode_outlined)
           : const Icon(Icons.dark_mode_outlined));
-          
-            void addString() {
-              strings.add("Strings");
-              setState(() {
-                
-              });
-            }
-            
-              void removeString() {
-                strings.removeLast();
-                setState(() {
-                  
-                });
-              }
+
+  void addString() {
+    strings.add("Strings");
+    setState(() {});
+  }
+
+  void removeString() {
+    strings.removeLast();
+    setState(() {});
+  }
 }
