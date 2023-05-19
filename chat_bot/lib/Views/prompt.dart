@@ -1,3 +1,4 @@
+// ignore: unused_import
 import 'dart:developer';
 
 import 'package:chat_bot/Models/chatGPTresponse.dart';
@@ -7,18 +8,18 @@ import 'package:chat_bot/Utils/utils.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
 
-import '../Utils/theme.dart';
 
 class Prompt extends StatefulWidget {
-  const Prompt({super.key, required this.updateTheme});
-
-  final VoidCallback updateTheme;
+  const Prompt({super.key});
 
   @override
   State<Prompt> createState() => _PromptState();
 }
 
 class _PromptState extends State<Prompt> {
+
+  
+
   final TextEditingController _controller = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -44,24 +45,33 @@ class _PromptState extends State<Prompt> {
 
   @override
   Widget build(BuildContext context) {
+
+    // String currentTheme = context.watch<BrightnesMode>().currentTheme;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      floatingActionButton: myFloatingActionButton(),
+      floatingActionButton: myFloatingActionButton("dark"),
       body: myBody(context),
     );
   }
 
-  Widget myFloatingActionButton() =>
+  Widget myFloatingActionButton(String currentTheme) =>
       FabCircularMenu(
         ringDiameter: 400, 
         ringColor: Colors.blue[100],
         children: [
         IconButton(
-            onPressed: widget.updateTheme,
+            onPressed: () {
+              if (currentTheme == "dark"){
+                // context.read<BrightnesMode>().changeTheme("light");
+              }else{
+                // context.read<BrightnesMode>().changeTheme("dark");
+              }
+            },
             iconSize: 40,
             icon: currentTheme == "dark"
-                ? Icon(Icons.light_mode)
-                : Icon(Icons.dark_mode_outlined)),
+                ? const Icon(Icons.light_mode)
+                : const Icon(Icons.dark_mode_outlined)),
         showFav
             ? IconButton(
                 onPressed: () {
@@ -128,7 +138,7 @@ class _PromptState extends State<Prompt> {
                                               favorites.removeAt(index);
                                               setState(() {});
                                             },
-                                            icon: Icon(Icons.delete),
+                                            icon: const Icon(Icons.delete),
                                             color: Colors.red,
                                           )
                                             ],
@@ -178,7 +188,7 @@ class _PromptState extends State<Prompt> {
                                 },
                                 child: const Text("Generate"),
                               ),
-                              SizedBox(width: 20),
+                              const SizedBox(width: 20),
                               ElevatedButton(
                                 onPressed: () {
                                   if (resopnse != null) {
@@ -193,7 +203,7 @@ class _PromptState extends State<Prompt> {
                                 style: ElevatedButton.styleFrom(
                                     minimumSize: const Size(100, 50),
                                     backgroundColor: Colors.red),
-                                child: Icon(Icons.favorite),
+                                child: const Icon(Icons.favorite),
                               )
                             ],
                           ),
@@ -216,10 +226,10 @@ class _PromptState extends State<Prompt> {
                                     ),
                                   ),
                                 ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              minimumSize: Size(70, 40)
+                              minimumSize: const Size(70, 40)
                             ),
                               onPressed: () {
                                 showDialog(
@@ -239,7 +249,7 @@ class _PromptState extends State<Prompt> {
   }
 
   pickModel() {
-    final Text title = const Text("Pick Chat Model");
+    Text title = const Text("Pick Chat Model");
 
     final content = SizedBox(
       height: ScreenSize(context: context).height / 1.5,

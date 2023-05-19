@@ -1,14 +1,14 @@
+import 'dart:developer';
+
 import 'package:chat_bot/Views/prompt.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
 class CheckNetwork extends StatefulWidget {
   const CheckNetwork({
-    required this.updateTheme,
     super.key
     });
 
-    final VoidCallback updateTheme;
 
   @override
   State<CheckNetwork> createState() => _CheckNetworkState();
@@ -28,8 +28,6 @@ class _CheckNetworkState extends State<CheckNetwork> {
     super.initState();
   }
 
-  updateThemeFun()=> widget.updateTheme;
-
   checkNetwork() async{
     setState(() {
       connected = false;
@@ -37,14 +35,14 @@ class _CheckNetworkState extends State<CheckNetwork> {
     try {
   final result = await InternetAddress.lookup('google.com');
   if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-    print('connected');
+    log('connected');
   setState(() {
     connected = true;
     noInternet = false;
   });
   }
 } on SocketException catch (_) {
-  print('not connected');
+  log('not connected');
   setState(() {
     noInternet = true;
   });
@@ -82,7 +80,7 @@ class _CheckNetworkState extends State<CheckNetwork> {
     :
     connected?
 
-    Prompt(updateTheme: updateThemeFun)
+    Prompt()
     :
     const CircularProgressIndicator();
   }
