@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 class BrightnesMode with ChangeNotifier{
-  String _currentTheme = "";
+
+   final deviceThemeMode =
+        SchedulerBinding.instance.platformDispatcher.platformBrightness;
+
+  ThemeData _currentTheme = ThemeData.light();
 
   get currentTheme => _currentTheme;
 
-  initiateTheme(Brightness mode){
-    if (mode == Brightness.dark){
-      _currentTheme = "dark";
-    }else{
-      _currentTheme = "light";
-    }
-    notifyListeners();
-  }
 
   changeTheme(String mode){
-    _currentTheme = mode;
+    if (mode == "dark"){
+      _currentTheme = ThemeData.dark();
+    }else{
+      _currentTheme = ThemeData.light();
+    }
     notifyListeners();
   }
 }

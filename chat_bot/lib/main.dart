@@ -30,29 +30,28 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  final darkMode = ThemeData.dark();
-  final ligthMode = ThemeData.light();
-
-  late var deviceThemeMode;
-
-  bool isDarkMode = false;
+ 
+ late Brightness deviceThemeMode;
 
   @override
   void initState() {
-    deviceThemeMode =
-        SchedulerBinding.instance.platformDispatcher.platformBrightness;
-
-    // context.read<BrightnesMode>().initiateTheme(deviceThemeMode);
+    
+   
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      darkTheme: isDarkMode ? darkMode : ligthMode,
-      home: const CheckNetwork(),
+    return ChangeNotifierProvider(
+      create: (_) => BrightnesMode(),
+      builder: (context, child) {
+        return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        darkTheme: context.watch<BrightnesMode>().currentTheme,
+        home: const CheckNetwork(),
+      );
+      },
     );
   }
 

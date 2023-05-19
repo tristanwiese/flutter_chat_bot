@@ -7,6 +7,9 @@ import 'package:chat_bot/Utils/favorites.dart';
 import 'package:chat_bot/Utils/utils.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../Utils/theme.dart';
 
 
 class Prompt extends StatefulWidget {
@@ -46,30 +49,29 @@ class _PromptState extends State<Prompt> {
   @override
   Widget build(BuildContext context) {
 
-    // String currentTheme = context.watch<BrightnesMode>().currentTheme;
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      floatingActionButton: myFloatingActionButton("dark"),
+      floatingActionButton: myFloatingActionButton(context),
       body: myBody(context),
     );
   }
 
-  Widget myFloatingActionButton(String currentTheme) =>
-      FabCircularMenu(
+  Widget myFloatingActionButton(BuildContext context){
+    ThemeData currentTheme = context.watch<BrightnesMode>().currentTheme;
+      return FabCircularMenu(
         ringDiameter: 400, 
         ringColor: Colors.blue[100],
         children: [
         IconButton(
             onPressed: () {
-              if (currentTheme == "dark"){
-                // context.read<BrightnesMode>().changeTheme("light");
+              if (currentTheme == ThemeData.dark()){
+                context.read<BrightnesMode>().changeTheme("light");
               }else{
-                // context.read<BrightnesMode>().changeTheme("dark");
+                context.read<BrightnesMode>().changeTheme("dark");
               }
             },
             iconSize: 40,
-            icon: currentTheme == "dark"
+            icon: currentTheme == ThemeData.dark()
                 ? const Icon(Icons.light_mode)
                 : const Icon(Icons.dark_mode_outlined)),
         showFav
@@ -90,6 +92,7 @@ class _PromptState extends State<Prompt> {
                 iconSize: 40,
               )
       ]);
+  }
 
   Widget myBody(BuildContext context) {
     return Center(
@@ -127,11 +130,14 @@ class _PromptState extends State<Prompt> {
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
-                                              Text(
-                                                "${favorites[index]["prompt"]}: ${favorites[index]["model"]}",
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                              Flexible(
+                                                child: Text(
+                                                  "${favorites[index]["prompt"]}: ${favorites[index]["model"]}",
+                                                  textAlign: TextAlign.center,
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
                                               ),
                                               IconButton(
                                             onPressed: () {
