@@ -1,8 +1,8 @@
 // ignore: unused_import
 import 'dart:developer';
 
-import 'package:chat_bot/Models/chatGPTresponse.dart';
-import 'package:chat_bot/Services/chatGPTApi.dart';
+import 'package:chat_bot/Models/chat_gpt_response.dart';
+import 'package:chat_bot/Services/chat_gpt_api.dart';
 import 'package:chat_bot/Utils/favorites.dart';
 import 'package:chat_bot/Utils/utils.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
@@ -27,7 +27,7 @@ class _PromptState extends State<Prompt> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String chatModel = "Ada";
+  String _chatModel = "Ada";
 
   bool displayPrompt = false;
 
@@ -41,7 +41,7 @@ class _PromptState extends State<Prompt> {
       displayPrompt = true;
     });
     resopnse = await GPTCompletion(
-            prompt: _controller.text.trim(), model: MODELS[chatModel])
+            prompt: _controller.text.trim(), model: MODELS[_chatModel])
         .completePrompt();
     setState(() {});
   }
@@ -202,7 +202,7 @@ class _PromptState extends State<Prompt> {
                                       "prompt": _controller.text.trim(),
                                       "response":
                                           resopnse!.choices[0].text.trim(),
-                                          "model":chatModel
+                                          "model":_chatModel
                                     });
                                   }
                                 },
@@ -243,7 +243,7 @@ class _PromptState extends State<Prompt> {
                                   builder: (context) => pickModel(),
                                 );
                               },
-                              child: Text(chatModel))
+                              child: Text(_chatModel))
                         ],
                       ),
               ),
@@ -265,7 +265,7 @@ class _PromptState extends State<Prompt> {
             title: const Text("Davinci"),
             subtitle: const Text("Powerful but slow"),
             onTap: () {
-              chatModel = "Davinci";
+              _chatModel = "Davinci";
               setState(() {});
               Navigator.of(context).pop();
             },
@@ -274,7 +274,7 @@ class _PromptState extends State<Prompt> {
             title: const Text("Curie"),
             subtitle: const Text("Very capable, but faster"),
             onTap: () {
-              chatModel = "Curie";
+              _chatModel = "Curie";
               setState(() {});
               Navigator.of(context).pop();
             },
@@ -283,7 +283,7 @@ class _PromptState extends State<Prompt> {
             title: const Text("Babbage"),
             subtitle: const Text("Capable of straightforward tasks, very fast"),
             onTap: () {
-              chatModel = "Babbage";
+              _chatModel = "Babbage";
               setState(() {});
               Navigator.of(context).pop();
             },
@@ -292,7 +292,7 @@ class _PromptState extends State<Prompt> {
             title: const Text("Ada"),
             subtitle: const Text("Fastest of all the models"),
             onTap: () {
-              chatModel = "Ada";
+              _chatModel = "Ada";
               setState(() {});
               Navigator.of(context).pop();
             },

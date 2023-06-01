@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:chat_bot/Utils/theme.dart';
 import 'package:chat_bot/check_network.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 // main() {

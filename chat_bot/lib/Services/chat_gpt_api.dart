@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:chat_bot/Models/chatGPTresponse.dart';
+import 'package:chat_bot/Models/chat_gpt_response.dart';
 import "package:http/http.dart" as http;
 
 // ignore: non_constant_identifier_names
@@ -20,21 +20,19 @@ class GPTCompletion{
   // user provided prompt
   final String prompt;
   // 
-  final model;
+  final String model;
   //details to use the api
   final String _ulr = "https://api.openai.com/v1/completions";
-  final _apiKey = "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";
+  
 
   
 
  Future<GptResopnse> completePrompt() async{
 
-  log("$model");
-
   // headers for POST request
   final Map<String, String> headers = {
 
-    "Authorization": "Bearer $_apiKey",
+    "Authorization": "Bearer",
     "Content-Type": "application/json"
 
   };

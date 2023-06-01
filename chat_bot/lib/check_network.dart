@@ -68,7 +68,7 @@ class _CheckNetworkState extends State<CheckNetwork> {
               style: ElevatedButton.styleFrom(
                 shape: const CircleBorder(
                 ),
-                minimumSize: Size(50,50)
+                minimumSize: const Size(50,50)
               ),
               onPressed: () => checkNetwork(), 
               child: const Icon(Icons.replay_outlined)
@@ -80,7 +80,7 @@ class _CheckNetworkState extends State<CheckNetwork> {
     :
     connected?
 
-    Prompt()
+    const Prompt()
     :
     const CircularProgressIndicator();
   }
